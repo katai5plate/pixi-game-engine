@@ -1,2 +1,3 @@
 # hello-pixi
-PixiJSをちゃんと入門する
+
+PixiJS をちゃんと入門する
