@@ -3,6 +3,7 @@
     "sourceMap": true,
     "target": "es5",
     "moduleResolution": "node",
-    "lib": ["es2019", "dom"]
+    "lib": ["es2019", "dom"],
+    "typeRoots": ["types", "node_modules/@types"]
   }
 }

@@ -1,0 +1,7 @@
+<script>
+  window._redirect = () => (location.href = "./dist/index.html");
+</script>
+<a onclick="window._redirect()">Redirect after 3 seconds... (or CLICK ME!)</a>
+<script>
+  setTimeout(window._redirect, 3000);
+</script>

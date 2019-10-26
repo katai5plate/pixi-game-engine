@@ -7,7 +7,7 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      // maxSize: 1000000, // 分割サイズ
+      maxSize: 1310000, // 分割サイズ
       name: "libs",
       chunks: "initial"
     }
@@ -26,6 +26,17 @@ module.exports = {
       {
         test: /\.ts$/,
         use: "ts-loader"
+      },
+      {
+        test: /\.css$/,
+        use: "css-loader"
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|ogg|mp3|wav|mpe?g|webm)$/i,
+        loader: "file-loader",
+        options: {
+          name: "[contenthash].[ext]"
+        }
       }
     ]
   },

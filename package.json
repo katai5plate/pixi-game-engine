@@ -10,15 +10,22 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.144",
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
     "html-webpack-plugin": "^4.0.0-beta.8",
+    "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.0",
     "ts-loader": "^6.2.0",
     "typescript": "^3.6.4",
+    "url-loader": "^2.2.0",
     "webpack": "^4.41.1",
     "webpack-cli": "^3.3.9"
   },
   "scripts": {
+    "dev": "run-p watch serve",
     "build": "rimraf ./dist && webpack",
+    "watch": "rimraf ./dist && webpack -w",
+    "serve": "browser-sync start --config ./bs-config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
