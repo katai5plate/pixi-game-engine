@@ -1,0 +1,9 @@
+{
+  "title": "Hello, PixiJS!",
+  "width": 256,
+  "height": 256,
+  "antialias": true,
+  "transparent": false,
+  "resolution": 1,
+  "codeSplitMaxSize": 1400000
+}

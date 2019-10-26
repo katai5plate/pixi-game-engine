@@ -1,0 +1,19 @@
+body {
+  /* 背景色 black 推奨 */
+  background-color: black;
+
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  /* auto か 100% にすることで幅高どちらを基準に拡大するか決める */
+  width: auto; /* auto 推奨 */
+  height: 100%; /* 100% 推奨 */
+
+  position: absolute;
+  margin: auto;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}

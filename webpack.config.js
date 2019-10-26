@@ -1,3 +1,4 @@
+const gameConfig = require("./game.config.json");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: "development",
@@ -7,14 +8,15 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      maxSize: 1310000, // 分割サイズ
+      maxSize: gameConfig.codeSplitMaxSize,
       name: "libs",
       chunks: "initial"
     }
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Hello, PixiJS!"
+      title: gameConfig.title,
+      favicon: `${__dirname}/favicon.ico`
     })
   ],
   output: {
@@ -29,7 +31,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: "css-loader"
+        use: ["style-loader", "css-loader"]
       },
       {
         test: /\.(png|jpe?g|gif|svg|ogg|mp3|wav|mpe?g|webm)$/i,
