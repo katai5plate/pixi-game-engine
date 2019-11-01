@@ -3,6 +3,10 @@
 PixiJS をちゃんと入門する。
 めざせゲームエンジン
 
+- セットアップ `npm i`
+- 開発・サーバー起動 `npm run dev`
+- ブラウザ版をデプロイ `npm run build`
+
 ## 開発メモ
 
 ### webpack + ts
