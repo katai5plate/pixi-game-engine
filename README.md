@@ -3,9 +3,16 @@
 PixiJS をちゃんと入門する。
 めざせゲームエンジン
 
+## Usage
+
+- ダウンロード `git clone https://github.com/katai5plate/hello-pixi/`
 - セットアップ `npm i`
 - 開発・サーバー起動 `npm run dev`
 - ブラウザ版をデプロイ `npm run build`
+
+### 必要なもの
+- Node.js
+- Git
 
 ## 開発メモ
 
