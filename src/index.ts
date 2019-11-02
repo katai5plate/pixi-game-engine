@@ -5,8 +5,8 @@ document.body.appendChild(application.view);
 
 import SceneTitle from "./scenes/title";
 
-const scene = new SceneTitle();
-scene.wakeUp();
+window.scene = new SceneTitle();
+window.scene.wakeUp();
 
 // const life = new Life(application, [SceneTitle]);
 

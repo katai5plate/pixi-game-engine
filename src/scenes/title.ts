@@ -6,6 +6,6 @@ export default class Cat extends GameObject {
     super({ spriteSrc: image });
   }
   update(delta): void {
-    this.sprite.x += delta;
+    this.sprite.x += delta * 0.1;
   }
 }

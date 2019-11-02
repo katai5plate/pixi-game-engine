@@ -19,7 +19,7 @@ interface GameObjectParamaters {
  * 2. `onEnable()`: 有効化時の処理
  * 3. `update()`: 有効中の毎フレームの処理
  * 4. `onDisable()`: 無効化時の処理
- * 5. `onDestroy()`: 終了時の処理
+ * 5. `onFinish()`: 終了時の処理 ( ループ処理を切り、Disableな状態 )
  *
  * #### 備考
  * - 「 `wakeUp()` 前の状態」と 「 `isEnable === false` かつ `wakeUp` 後の状態」の違いは、ループ処理が行われているかどうかの違いで、前者は行われていない。
@@ -32,6 +32,7 @@ export default class GameObject {
   prevState: State;
   isEnable: boolean;
   sprite: Sprite;
+  loopFn: () => void;
 
   constructor(paramaters: GameObjectParamaters) {
     this.application = application;
@@ -42,6 +43,7 @@ export default class GameObject {
       ? PIXI.Sprite.from(paramaters.spriteSrc)
       : new PIXI.Sprite();
     this.application.stage.addChild(this.sprite);
+    this.loopFn = this.run.bind(this);
   }
 
   /** 起動 */
@@ -56,10 +58,11 @@ export default class GameObject {
     } else if (this.isEnable === true && status === false) {
       this.onDisable();
     }
+    this.sprite.visible = status;
     this.isEnable = status;
     return void 0;
   }
-  /** ループを終了する */
+  /** ループを終了し無力化する */
   public setFinish(): void {
     this.finish();
     return void 0;
@@ -91,7 +94,7 @@ export default class GameObject {
     return void 0;
   }
   /** 終了時の処理 */
-  protected onDestroy(): void {
+  protected onFinish(): void {
     return void 0;
   }
   /** ステート更新時の処理 */
@@ -102,7 +105,7 @@ export default class GameObject {
   /** 内部の開始処理 */
   private begin(): void {
     this.start();
-    this.application.ticker.add(this.run.bind(this), this);
+    this.application.ticker.add(this.loopFn);
   }
   /** 内部のループ処理 */
   private run(delta: number): void {
@@ -112,7 +115,11 @@ export default class GameObject {
   }
   /** 内部の終了処理 */
   private finish(): void {
-    this.isEnable === false;
-    this.application.ticker.remove(this.run.bind(this), this);
+    this.application.ticker.remove(this.loopFn);
+    this.application.stage.removeChild(this.sprite);
+    this.isEnable = false;
+    this.sprite.visible = false;
+    this.sprite = null;
+    this.onFinish();
   }
 }
