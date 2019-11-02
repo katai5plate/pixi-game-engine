@@ -1,14 +1,11 @@
 import * as image from "../assets/cat.png";
-import Organism from "./Organism";
+import GameObject from "../GameObject";
 
-class Cat extends Organism {
+export default class Cat extends GameObject {
   constructor() {
-    super({ spritePath: image });
+    super({ spriteSrc: image });
   }
-  setup(app) {}
-  update(app: App, delta: number) {
+  update(delta): void {
     this.sprite.x += delta;
   }
 }
-
-export default new Cat();
