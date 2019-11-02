@@ -13,6 +13,9 @@ PixiJS をちゃんと入門する。
 ### 必要なもの
 - Node.js
 - Git
+- Visual Studio Code
+- VSCode拡張: ESLint
+- VSCode拡張: Prettier
 
 ## 開発メモ
 
