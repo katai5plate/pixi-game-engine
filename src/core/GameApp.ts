@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import { Key } from "ts-keycode-enum";
 import { GameScene } from "./GameScene";
 import {
   AssetList,
@@ -7,6 +8,8 @@ import {
   SceneList
 } from "../../types/engine";
 import { SceneAlias } from "../lists/scenes";
+import { keyList, KeyAlias } from "../lists/keys";
+import { KeyboardButton } from "../Input";
 
 interface GameAppParameters {
   assetList: AssetList;
@@ -20,8 +23,9 @@ export class GameApp extends PIXI.Application {
   sceneList: SceneList;
   currentScene: GameScene;
   defaultScene: SceneAlias;
-  // zippedSceneList: typeof GameScene[];
-  // sceneList: GameScene[];
+
+  keys: { alias: KeyAlias; event: KeyboardButton }[];
+  keyEvents: KeyboardButton[];
 
   public time: number;
   public timeInt: number;
@@ -36,7 +40,6 @@ export class GameApp extends PIXI.Application {
     this.props = { ...pixiApplicationConfig, gameApp: this };
     this.assetList = gameAppParameters.assetList;
 
-    // GameScene を展開して props を継承させる
     this.sceneList = gameAppParameters.sceneList;
     this.defaultScene = gameAppParameters.defaultScene;
 
@@ -44,11 +47,52 @@ export class GameApp extends PIXI.Application {
     this.time = 0;
     this.timeInt = 0;
 
+    // keyCode を index としたキー情報
+    this.keys = keyList.reduce((p, { alias, src }) => {
+      src.forEach(v => {
+        p[v] = { alias, event: new KeyboardButton(v) };
+      });
+      return p;
+    }, []);
+    // this.keys からイベント参照のみ集めたもの
+    this.keyEvents = this.keys.filter(Boolean).map(v => v.event);
+
+    window.addEventListener("keydown", e => {
+      this.keys[e.keyCode].event.onDown();
+    });
+    window.addEventListener("keyup", e => {
+      this.keys[e.keyCode].event.onUp();
+    });
+
     this.preloadAssets();
   }
   private initialize(): void {
     this.setScene(this.defaultScene);
     return void 0;
+  }
+  /** 指定のキーが押し続けられているか調べる */
+  public getKeyDown(alias: KeyAlias): boolean {
+    const keys = this.keys.filter(v => v.alias === alias);
+    if (keys.length === 0) return false;
+    return keys.map(k => k.event.pressed === true).includes(true);
+  }
+  /** 指定のキーが何フレーム以上押し続けられているか調べる */
+  public getHowLongKeyDown(alias: KeyAlias, frames: number): boolean {
+    const keys = this.keys.filter(v => v.alias === alias);
+    if (keys.length === 0) return false;
+    return keys.map(k => k.event.time >= frames).includes(true);
+  }
+  /** 指定のキーが押されていないことを調べる */
+  public getKeyUp(alias: KeyAlias): boolean {
+    const keys = this.keys.filter(v => v.alias === alias);
+    if (keys.length === 0) return false;
+    return keys.map(k => k.event.pressed === false).includes(true);
+  }
+  /** 指定のキーを押し始めたタイミングかを調べる */
+  public getKeyTrigger(alias: KeyAlias): boolean {
+    const keys = this.keys.filter(v => v.alias === alias);
+    if (keys.length === 0) return false;
+    return keys.map(k => k.event.time === 1).includes(true);
   }
   /** シーン変更 */
   public setScene(alias: SceneAlias): void {
@@ -82,6 +126,7 @@ export class GameApp extends PIXI.Application {
     if (this.time >= Number.MAX_SAFE_INTEGER) this.time = 0;
     this.time += delta;
     this.timeInt = Math.floor(this.time);
+    this.keyEvents.forEach((keyEvent: KeyboardButton) => keyEvent.onUpdate());
     this.stage.children.forEach((gameScene: GameScene) =>
       gameScene.insideUpdate(delta)
     );

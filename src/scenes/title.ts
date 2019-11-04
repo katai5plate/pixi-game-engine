@@ -3,6 +3,7 @@ import { GameObject } from "../core/GameObject";
 import { GameScene } from "../core/GameScene";
 import { Props } from "../../types/engine";
 import { AssetAlias } from "../lists/assets";
+import { KeyAlias } from "../lists/keys";
 
 class Cat extends GameObject {
   dx: number;
@@ -45,6 +46,10 @@ export class TitleScene extends GameScene {
       for (let i = 0; i < 5; i++) {
         this.addChild(new Cat(this.props));
       }
+    }
+    if (this.props.gameApp.getKeyDown(KeyAlias.Right)) {
+      this.x++;
+      console.log("A!");
     }
   }
 }
