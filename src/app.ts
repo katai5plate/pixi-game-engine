@@ -17,7 +17,8 @@ export const application = new GameApp(
     assetList,
     sceneList: [
       // GameScene
-      SceneTitle
-    ]
+      { alias: "title", gameScene: SceneTitle }
+    ],
+    defaultScene: "title"
   }
 );

@@ -13,17 +13,15 @@ export class GameScene extends PIXI.Container {
   objectList: GameObject[];
   constructor(props: Props) {
     super();
-    this.props = props;
+    this.props = { ...props, gameScene: this };
     console.log(this, this.visible);
   }
   public initialize(gameSceneParamaters: GameSceneParamaters = {}): void {
-    console.log("GameScene init");
     keeper(gameSceneParamaters);
     this.onStart();
   }
   /** 初期化直後の処理 */
   public onStart(): void {
-    console.log("GameScene start");
     return void 0;
   }
   /** 有効中の毎フレームの処理 */

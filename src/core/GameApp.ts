@@ -1,18 +1,26 @@
 import * as PIXI from "pixi.js";
 import { GameScene } from "./GameScene";
-import { AssetList, PIXIApplicationConfig, Props } from "../../types/engine";
+import {
+  AssetList,
+  PIXIApplicationConfig,
+  Props,
+  SceneList
+} from "../../types/engine";
 
 interface GameAppParameters {
   assetList: AssetList;
-  sceneList: typeof GameScene[];
+  sceneList: SceneList;
+  defaultScene: string;
 }
 
 export class GameApp extends PIXI.Application {
   props: Props;
   assetList: AssetList;
+  sceneList: SceneList;
   currentScene: GameScene;
-  zippedSceneList: typeof GameScene[];
-  sceneList: GameScene[];
+  defaultScene: string;
+  // zippedSceneList: typeof GameScene[];
+  // sceneList: GameScene[];
 
   public time: number;
   public timeInt: number;
@@ -28,7 +36,8 @@ export class GameApp extends PIXI.Application {
     this.assetList = gameAppParameters.assetList;
 
     // GameScene を展開して props を継承させる
-    this.zippedSceneList = gameAppParameters.sceneList;
+    this.sceneList = gameAppParameters.sceneList;
+    this.defaultScene = gameAppParameters.defaultScene;
 
     this.insideUpdateBind = this.insideUpdate.bind(this);
     this.time = 0;
@@ -37,10 +46,17 @@ export class GameApp extends PIXI.Application {
     this.preloadAssets();
   }
   private initialize(): void {
-    this.sceneList = this.zippedSceneList.map(
-      (scene: typeof GameScene) => new scene(this.props)
-    );
+    this.setScene(this.defaultScene);
     return void 0;
+  }
+  /** シーン変更 */
+  public setScene(alias: string): void {
+    const scene: typeof GameScene = this.sceneList.filter(
+      v => v.alias === alias
+    )[0].gameScene;
+    this.currentScene = new scene(this.props);
+    this.stage.removeChildren();
+    this.stage.addChild(this.currentScene);
   }
   /** 素材のプリロード */
   private preloadAssets(): void {
@@ -59,7 +75,6 @@ export class GameApp extends PIXI.Application {
   /** 内部の開始処理(プリロード後) */
   private insideStart(): void {
     this.ticker.add(this.insideUpdateBind);
-    this.stage.addChild(...this.sceneList);
   }
   /** 内部のループ処理 */
   private insideUpdate(delta: number): void {

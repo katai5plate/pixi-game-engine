@@ -112,8 +112,7 @@ export class GameObject extends PIXI.Sprite {
   /** 内部の終了処理 */
   private insideFinish(): void {
     this.isEnable = false;
-    this.sprite.visible = false;
-    this.sprite = null;
+    this.visible = false;
     this.onFinish();
   }
 }

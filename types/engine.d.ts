@@ -1,4 +1,5 @@
 import { GameApp } from "../src/core/GameApp";
+import { GameScene } from "../src/core/GameScene";
 
 /**
  * PIXI系
@@ -75,6 +76,7 @@ export type MemorableData =
 /** 継承プロパティ */
 export type Props = {
   gameApp: GameApp;
+  gameScene?: GameScene;
   // [key: string]: MemorableData;
 } & PIXIApplicationConfig;
 /** 固有ステート */
@@ -82,3 +84,5 @@ export type State = { [key: string]: MemorableData };
 
 /** 素材データ */
 export type AssetList = { alias: string; src: string }[];
+
+export type SceneList = { alias: string; gameScene: typeof GameScene }[];

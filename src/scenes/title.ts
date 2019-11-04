@@ -1,4 +1,3 @@
-// import * as image from "../assets/cat.png";
 import { GameObject } from "../core/GameObject";
 import { GameScene } from "../core/GameScene";
 import { Props } from "../../types/engine";
@@ -7,6 +6,7 @@ class Cat extends GameObject {
   dx: number;
   dy: number;
   speed: number;
+  time: number;
   constructor(props: Props) {
     super(props);
     this.initialize({ spriteSrc: "cat" });
@@ -17,12 +17,17 @@ class Cat extends GameObject {
     this.y = this.props.height / 2;
     this.dx = Math.random() * 2 - 1;
     this.dy = Math.random() * 2 - 1;
-    this.speed = Math.random() * 10 - 5;
+    this.speed = Math.random() * 30 - 15;
+    this.time = 0;
   }
   onUpdate(delta: number): void {
     this.angle += delta * this.speed;
     this.x += delta * this.dx * this.speed;
     this.y += delta * this.dy * this.speed;
+    this.time += delta;
+    if (this.time > 60) {
+      this.destroy();
+    }
   }
 }
 
@@ -33,12 +38,7 @@ export class SceneTitle extends GameScene {
   }
   onUpdate(delta: number): void {
     if (this.props.gameApp.timeInt % 10 === 0) {
-      if (this.children.length < 100) {
-        this.addChild(new Cat(this.props));
-      }
-      // console.log(this.props.gameApp.timeInt);
-      // this.addChild(new SimpleCat(this.props));
-      // console.log(this);
+      this.addChild(new Cat(this.props));
     }
   }
 }
