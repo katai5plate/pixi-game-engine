@@ -3,9 +3,9 @@ import { keeper } from "../helpers/utils";
 import { GameObject } from "./GameObject";
 import { Props } from "../../types/engine";
 
-interface GameSceneParamaters {
-  _nothing?: {};
-}
+// interface GameSceneParamaters {
+//   _nothing?: {};
+// }
 
 export class GameScene extends PIXI.Container {
   props: Props;
@@ -14,10 +14,10 @@ export class GameScene extends PIXI.Container {
   constructor(props: Props) {
     super();
     this.props = { ...props, gameScene: this };
-    console.log(this, this.visible);
   }
-  public initialize(gameSceneParamaters: GameSceneParamaters = {}): void {
-    keeper(gameSceneParamaters);
+  // public initialize(gameSceneParamaters: GameSceneParamaters = {}): void {
+  public initialize(): void {
+    // keeper(gameSceneParamaters);
     this.onStart();
   }
   /** 初期化直後の処理 */

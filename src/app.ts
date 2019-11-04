@@ -1,9 +1,8 @@
 import { GameApp } from "./core/GameApp";
 import * as config from "../game.config.json";
 
-import assetList from "./assetList";
-import { SceneTitle } from "./scenes/title";
-// import { GameScene } from "./core/GameScene";
+import { assetList } from "./lists/assets";
+import { sceneList, SceneAlias } from "./lists/scenes";
 
 export const application = new GameApp(
   {
@@ -15,10 +14,7 @@ export const application = new GameApp(
   },
   {
     assetList,
-    sceneList: [
-      // GameScene
-      { alias: "title", gameScene: SceneTitle }
-    ],
-    defaultScene: "title"
+    sceneList,
+    defaultScene: SceneAlias.Title
   }
 );

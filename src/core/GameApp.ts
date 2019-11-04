@@ -6,11 +6,12 @@ import {
   Props,
   SceneList
 } from "../../types/engine";
+import { SceneAlias } from "../lists/scenes";
 
 interface GameAppParameters {
   assetList: AssetList;
   sceneList: SceneList;
-  defaultScene: string;
+  defaultScene: SceneAlias;
 }
 
 export class GameApp extends PIXI.Application {
@@ -18,7 +19,7 @@ export class GameApp extends PIXI.Application {
   assetList: AssetList;
   sceneList: SceneList;
   currentScene: GameScene;
-  defaultScene: string;
+  defaultScene: SceneAlias;
   // zippedSceneList: typeof GameScene[];
   // sceneList: GameScene[];
 
@@ -50,7 +51,7 @@ export class GameApp extends PIXI.Application {
     return void 0;
   }
   /** シーン変更 */
-  public setScene(alias: string): void {
+  public setScene(alias: SceneAlias): void {
     const scene: typeof GameScene = this.sceneList.filter(
       v => v.alias === alias
     )[0].gameScene;
@@ -61,7 +62,7 @@ export class GameApp extends PIXI.Application {
   /** 素材のプリロード */
   private preloadAssets(): void {
     this.assetList.reduce((p: PIXI.Loader, c): PIXI.Loader => {
-      return p.add(c.alias, c.src);
+      return p.add(`${c.alias}`, c.src);
     }, this.loader);
     this.loader.on("progress", (loader: PIXI.Loader) =>
       console.log(`progress: ${loader.progress} %`)

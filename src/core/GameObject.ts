@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 import { cloneDeep } from "lodash";
 import { keeper } from "../helpers/utils";
 import { State, Props, Sprite, MemorableData } from "../../types/engine";
+import { AssetAlias } from "../lists/assets";
 
 // import * as cat from "../assets/cat.png";
 
@@ -9,7 +10,7 @@ export interface GameObjectParamaters {
   props?: Props;
   state?: State;
   isEnable?: boolean;
-  spriteSrc?: string;
+  spriteAlias?: AssetAlias;
 }
 
 /**
@@ -42,9 +43,11 @@ export class GameObject extends PIXI.Sprite {
   public initialize(paramaters: GameObjectParamaters = {}): void {
     this.state = paramaters.state || {};
     this.isEnable = paramaters.isEnable || true;
-    this.texture = paramaters.spriteSrc
-      ? this.props.gameApp.loader.resources[paramaters.spriteSrc].texture
-      : void 0;
+    this.texture =
+      paramaters.spriteAlias !== void 0
+        ? this.props.gameApp.loader.resources[`${paramaters.spriteAlias}`]
+            .texture
+        : void 0;
     this.insideStart();
     return void 0;
   }

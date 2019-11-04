@@ -83,6 +83,9 @@ export type Props = {
 export type State = { [key: string]: MemorableData };
 
 /** 素材データ */
-export type AssetList = { alias: string; src: string }[];
+export type AssetList = { alias: string | number; src: string }[];
 
-export type SceneList = { alias: string; gameScene: typeof GameScene }[];
+export type SceneList = {
+  alias: string | number;
+  gameScene: typeof GameScene;
+}[];
