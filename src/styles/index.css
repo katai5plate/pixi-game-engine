@@ -7,8 +7,8 @@ body {
 }
 canvas {
   /* auto か 100% にすることで幅高どちらを基準に拡大するか決める */
-  width: auto; /* auto 推奨 */
-  height: 100%; /* 100% 推奨 */
+  width: 100%; /* 横長の場合 100% 推奨 */
+  height: auto; /* 横長の場合 auto 推奨 */
 
   position: absolute;
   margin: auto;

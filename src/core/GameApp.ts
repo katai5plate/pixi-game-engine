@@ -122,7 +122,10 @@ export class GameApp extends PIXI.Application {
     const { width: cw, height: ch } = this.props;
     const x = rw / cw;
     const y = rh / ch;
-    if (x !== y) console.warn("Canvas ratio is not constant:", { x, y });
+    if (x !== y) {
+      // console.warn("Canvas ratio is not constant:", { x, y });
+      return (x + y) / 2;
+    }
     return x;
   }
   /** Canvas の client 座標からスクリーン座標を取得 */

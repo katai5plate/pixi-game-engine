@@ -12,7 +12,7 @@ class Cat extends GameObject {
   time: number;
   constructor(props: Props) {
     super(props);
-    this.initialize({ spriteAlias: AssetAlias.Cat });
+    this.initialize({ spriteAlias: AssetAlias.Light });
   }
   onStart(): void {
     this.anchor.set(0.5);
