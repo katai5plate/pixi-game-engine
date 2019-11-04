@@ -1,25 +1,47 @@
+import { GameApp } from "../src/core/GameApp";
+
 /**
  * PIXI系
  */
 
 /** 描画アプリケーション */
-type App = PIXI.Application;
-type AppProcess = (app: App) => void;
+export type App = PIXI.Application;
+export type AppProcess = (app: App) => void;
 /** 描画スプライト */
-type Sprite = PIXI.Sprite;
+export type Sprite = PIXI.Sprite;
+/** PIXI.Application の引数 */
+export interface PIXIApplicationConfig {
+  width: number;
+  height: number;
+  antialias?: boolean;
+  transparent?: boolean;
+  resolution?: number;
+  autoStart?: boolean;
+  view?: HTMLCanvasElement;
+  autoDensity?: boolean;
+  preserveDrawingBuffer?: boolean;
+  forceCanvas?: boolean;
+  backgroundColor?: number;
+  clearBeforeRender?: boolean;
+  forceFXAA?: boolean;
+  powerPreference?: string;
+  sharedTicker?: boolean;
+  sharedLoader?: boolean;
+  resizeTo?: Window | HTMLElement;
+}
 
 /**
  * 保存用データ（JSON出力可能にする）
  */
 
 /** GameObject内で保存可能な値 */
-type MemorablePrimitive = string | number | boolean;
+export type MemorablePrimitive = string | number | boolean;
 /** GameObject内で保存可能な配列 (型の混用禁止) */
-type MemorablePrimitiveArray = string[] | number[] | boolean[];
+export type MemorablePrimitiveArray = string[] | number[] | boolean[];
 /** GameObject内で保存可能な配列 (再帰しないオブジェクトの許可)) */
-type MemorableArray = MemorablePrimitiveArray | MemorableObject[];
+export type MemorableArray = MemorablePrimitiveArray | MemorableObject[];
 /** GameObject内で保存可能なオブジェクト (再帰禁止) */
-type MemorableObject = { [member: string]: MemorablePrimitive };
+export type MemorableObject = { [member: string]: MemorablePrimitive };
 /**
  * GameObject内で保存可能なデータ
  *
@@ -45,9 +67,18 @@ type MemorableObject = { [member: string]: MemorablePrimitive };
  * }
  * ```
  */
-type MemorableData = MemorablePrimitive | MemorableObject | MemorableArray;
+export type MemorableData =
+  | MemorablePrimitive
+  | MemorableObject
+  | MemorableArray;
 
 /** 継承プロパティ */
-type Props = { [key: string]: MemorableData };
+export type Props = {
+  gameApp: GameApp;
+  // [key: string]: MemorableData;
+} & PIXIApplicationConfig;
 /** 固有ステート */
-type State = { [key: string]: MemorableData };
+export type State = { [key: string]: MemorableData };
+
+/** 素材データ */
+export type AssetList = { alias: string; src: string }[];

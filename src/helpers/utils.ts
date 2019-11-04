@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/** optional 値の代入用 */
+export const optional = (value: any, defaultValue: any = void 0): any =>
+  [null, void 0].includes(value) ? defaultValue : value;
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
