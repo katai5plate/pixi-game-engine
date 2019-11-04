@@ -89,3 +89,8 @@ export type SceneList = {
   alias: string | number;
   gameScene: typeof GameScene;
 }[];
+
+export interface Pos {
+  x: number;
+  y: number;
+}

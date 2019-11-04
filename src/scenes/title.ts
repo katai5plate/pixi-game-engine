@@ -3,7 +3,7 @@ import { GameObject } from "../core/GameObject";
 import { GameScene } from "../core/GameScene";
 import { Props } from "../../types/engine";
 import { AssetAlias } from "../lists/assets";
-import { KeyAlias } from "../lists/keys";
+import { KeyAlias, MouseButtonAlias } from "../lists/keys";
 
 class Cat extends GameObject {
   dx: number;
@@ -16,8 +16,12 @@ class Cat extends GameObject {
   }
   onStart(): void {
     this.anchor.set(0.5);
-    this.x = this.props.width / 2;
-    this.y = this.props.height / 2;
+    this.x = !this.props.gameApp.getMouseLeave()
+      ? this.props.gameApp.getMousePos().x
+      : this.props.width / 2;
+    this.y = !this.props.gameApp.getMouseLeave()
+      ? this.props.gameApp.getMousePos().y
+      : this.props.height / 2;
     this.dx = Math.random() * 2 - 1;
     this.dy = Math.random() * 2 - 1;
     this.speed = Math.random() * 10 - 5;
@@ -47,9 +51,10 @@ export class TitleScene extends GameScene {
         this.addChild(new Cat(this.props));
       }
     }
-    if (this.props.gameApp.getKeyDown(KeyAlias.Right)) {
-      this.x++;
-      console.log("A!");
+    if (this.props.gameApp.getMouseDown(MouseButtonAlias.Left)) {
+      for (let i = 0; i < 30; i++) {
+        this.addChild(new Cat(this.props));
+      }
     }
   }
 }

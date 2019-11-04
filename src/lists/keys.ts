@@ -33,3 +33,14 @@ export const keyList = [
   { alias: KeyAlias.R1, src: [Key.Q] },
   { alias: KeyAlias.R2, src: [Key.E] }
 ];
+
+/*
+  ここまで ---------------------------
+*/
+
+// addEventListener で採番される e.button の値を設定する
+export enum MouseButtonAlias {
+  Left = 0,
+  Wheel = 1,
+  Right = 2
+}
