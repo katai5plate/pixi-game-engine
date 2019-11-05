@@ -89,11 +89,26 @@ export class GameApp extends PIXI.Application {
       this.mouseIsLost = false;
       this.mousePos = this.clientPosToScreenPos(e.clientX, e.clientY);
     });
+    this.view.addEventListener("touchmove", e => {
+      console.log(e);
+      this.mouseIsLeave = false;
+      this.mouseIsLost = false;
+      this.mousePos = this.clientPosToScreenPos(
+        e.touches[0].clientX,
+        e.touches[0].clientY
+      );
+    });
     this.view.addEventListener("mousedown", e => {
       this.mouseEvents[e.button] && this.mouseEvents[e.button].onDown();
     });
+    this.view.addEventListener("touchstart", () => {
+      this.mouseEvents[MouseButtonAlias.Left].onDown();
+    });
     this.view.addEventListener("mouseup", e => {
       this.mouseEvents[e.button] && this.mouseEvents[e.button].onUp();
+    });
+    this.view.addEventListener("touchend", () => {
+      this.mouseEvents[MouseButtonAlias.Left].onUp();
     });
 
     // マウスが Canvas から離れたら強制的にボタンの押しっぱなしを解除する
@@ -164,7 +179,7 @@ export class GameApp extends PIXI.Application {
       return void 0;
     }
     // 一致
-    if (innerHeight > scrollHeight && scrollHeight !== 0) {
+    if (innerWidth < innerHeight) {
       // console.log(5);
       this.view.style.width = "100%";
       this.view.style.height = "auto";
