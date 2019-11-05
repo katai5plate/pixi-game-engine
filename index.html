@@ -1,15 +1,17 @@
-<p>Loading...</p>
+<a onclick="window._redirect()">Redirect... (or CLICK ME!)</a>
 <script>
-  const fn = () => {
+  const dist = "dist";
+  window._redirect = () => (location.href = `./${dist}/index.html`);
+  window._fn = () => {
     setTimeout(() => {
-      fetch("/dist/index.html").then(x => {
+      fetch(`/${dist}/`).then(x => {
         if (x.ok) {
-          location.href = "./dist/index.html";
+          setTimeout(window._redirect, 1000);
           return;
         }
-        fn();
+        window._fn();
       });
     }, 1000);
   };
-  fn();
+  window._fn();
 </script>
