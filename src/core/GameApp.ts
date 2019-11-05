@@ -79,19 +79,21 @@ export class GameApp extends PIXI.Application {
     this.mousePos = this.mouseWheel = { x: 0, y: 0 };
 
     document.addEventListener("keydown", e => {
-      this.keys[e.keyCode].event.onDown();
+      this.keys[e.keyCode] && this.keys[e.keyCode].event.onDown();
     });
     document.addEventListener("keyup", e => {
-      this.keys[e.keyCode].event.onUp();
+      this.keys[e.keyCode] && this.keys[e.keyCode].event.onUp();
     });
     this.view.addEventListener("mousemove", e => {
+      this.mouseIsLeave = false;
+      this.mouseIsLost = false;
       this.mousePos = this.clientPosToScreenPos(e.clientX, e.clientY);
     });
     this.view.addEventListener("mousedown", e => {
-      this.mouseEvents[e.button].onDown();
+      this.mouseEvents[e.button] && this.mouseEvents[e.button].onDown();
     });
     this.view.addEventListener("mouseup", e => {
-      this.mouseEvents[e.button].onUp();
+      this.mouseEvents[e.button] && this.mouseEvents[e.button].onUp();
     });
 
     // マウスが Canvas から離れたら強制的にボタンの押しっぱなしを解除する
@@ -108,6 +110,9 @@ export class GameApp extends PIXI.Application {
     window.addEventListener("focus", () => {
       this.mouseIsLost = false;
     });
+    // 初回起動時の設定。mousemove 時、強制解除
+    this.mouseIsLeave = true;
+    this.mouseIsLost = true;
 
     this.view.addEventListener("wheel", e => {
       this.mouseWheel = { x: e.deltaX, y: e.deltaY };

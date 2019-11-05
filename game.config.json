@@ -6,5 +6,5 @@
   "transparent": false,
   "resolution": 1,
   "codeSplitMaxSize": 1400000,
-  "backgroundColor": "black"
+  "backgroundColor": "blue"
 }
