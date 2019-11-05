@@ -29,14 +29,15 @@ class StarLight extends GameObject {
     this.time = 0;
   }
   onUpdate(delta: number): void {
+    const life = 120;
     this.angle += delta * this.speed;
     this.x += delta * this.dx * this.speed;
-    this.y += delta * this.dy * this.speed;
+    this.y += delta * this.dy * this.speed - this.time / 16;
     this.time += delta;
-    this.alpha = 1 - this.time / 60;
-    this.scale = new PIXI.Point(1 - this.time / 60, 1 - this.time / 60);
-    this.tint = rgb2hex(hsv2rgb({ h: (this.time * 5) % 360, s: 100, v: 100 }));
-    if (this.time > 60) {
+    this.alpha = 1 - this.time / life;
+    this.scale = new PIXI.Point(1 - this.time / life, 1 - this.time / life);
+    this.tint = rgb2hex(hsv2rgb({ h: (this.time * 4) % 360, s: 100, v: 100 }));
+    if (this.time > life) {
       this.destroy();
     }
   }
@@ -49,12 +50,12 @@ export class TitleScene extends GameScene {
   }
   onUpdate(/* delta: number */): void {
     if (this.props.gameApp.timeInt % 6 === 0) {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 3; i++) {
         this.addChild(new StarLight(this.props));
       }
     }
     if (this.props.gameApp.getMouseDown(MouseButtonAlias.Left)) {
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 10; i++) {
         this.addChild(new StarLight(this.props));
       }
     }
