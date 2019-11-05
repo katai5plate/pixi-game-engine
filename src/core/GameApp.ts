@@ -90,7 +90,6 @@ export class GameApp extends PIXI.Application {
       this.mousePos = this.clientPosToScreenPos(e.clientX, e.clientY);
     });
     this.view.addEventListener("touchmove", e => {
-      console.log(e);
       this.mouseIsLeave = false;
       this.mouseIsLost = false;
       this.mousePos = this.clientPosToScreenPos(
