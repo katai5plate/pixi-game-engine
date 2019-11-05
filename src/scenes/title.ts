@@ -4,6 +4,7 @@ import { GameScene } from "../core/GameScene";
 import { Props } from "../../types/engine";
 import { AssetAlias } from "../lists/assets";
 import { MouseButtonAlias } from "../lists/keys";
+import { hsv2rgb, rgb2hex } from "../helpers/math";
 
 class StarLight extends GameObject {
   dx: number;
@@ -12,7 +13,7 @@ class StarLight extends GameObject {
   time: number;
   constructor(props: Props) {
     super(props);
-    this.initialize({ spriteAlias: AssetAlias.Light });
+    this.initialize({ spriteAlias: AssetAlias.Rect });
   }
   onStart(): void {
     this.anchor.set(0.5);
@@ -34,6 +35,7 @@ class StarLight extends GameObject {
     this.time += delta;
     this.alpha = 1 - this.time / 60;
     this.scale = new PIXI.Point(1 - this.time / 60, 1 - this.time / 60);
+    this.tint = rgb2hex(hsv2rgb({ h: (this.time * 5) % 360, s: 100, v: 100 }));
     if (this.time > 60) {
       this.destroy();
     }
