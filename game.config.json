@@ -1,7 +1,7 @@
 {
   "title": "Hello, PixiJS!",
   "width": 640,
-  "height": 480,
+  "height": 640,
   "antialias": true,
   "transparent": false,
   "resolution": 1,

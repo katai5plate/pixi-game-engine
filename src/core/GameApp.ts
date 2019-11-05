@@ -135,19 +135,44 @@ export class GameApp extends PIXI.Application {
   /** リサイズ時に自動的に黒枠を再調整する */
   public updateResponsiveBlackBar(): void {
     const { innerWidth, innerHeight } = window;
-    const { scrollWidth } = this.view;
-    if (innerWidth > innerHeight && innerWidth > scrollWidth) {
+    const { width, height } = this.props;
+    const { scrollWidth, scrollHeight } = this.view;
+    // 横長
+    if (width > height) {
+      if (innerWidth > scrollWidth) {
+        // console.log(1);
+        this.view.style.width = "auto";
+        this.view.style.height = "100%";
+      } else {
+        // console.log(2);
+        this.view.style.width = "100%";
+        this.view.style.height = "auto";
+      }
+      return void 0;
+    }
+    // 縦長
+    if (width < height) {
+      if (innerHeight > scrollHeight && scrollHeight !== 0) {
+        // console.log(3);
+        this.view.style.width = "100%";
+        this.view.style.height = "auto";
+      } else {
+        // console.log(4);
+        this.view.style.width = "auto";
+        this.view.style.height = "100%";
+      }
+      return void 0;
+    }
+    // 一致
+    if (innerHeight > scrollHeight && scrollHeight !== 0) {
+      // console.log(5);
+      this.view.style.width = "100%";
+      this.view.style.height = "auto";
+    } else {
+      // console.log(6);
       this.view.style.width = "auto";
       this.view.style.height = "100%";
-      return void 0;
     }
-    if (innerWidth === innerHeight) {
-      this.view.style.width = "100%";
-      this.view.style.height = "100%";
-      return void 0;
-    }
-    this.view.style.width = "100%";
-    this.view.style.height = "auto";
     return void 0;
   }
   /** Canvas のサイズが何倍に描画されているか調べる */
