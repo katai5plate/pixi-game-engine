@@ -3,10 +3,6 @@ import { keeper } from "../helpers/utils";
 import { GameObject } from "./GameObject";
 import { Props } from "../../types/engine";
 
-// interface GameSceneParamaters {
-//   _nothing?: {};
-// }
-
 export class GameScene extends PIXI.Container {
   props: Props;
   unzipObjectList: typeof GameObject[];
@@ -15,9 +11,7 @@ export class GameScene extends PIXI.Container {
     super();
     this.props = { ...props, gameScene: this };
   }
-  // public initialize(gameSceneParamaters: GameSceneParamaters = {}): void {
   public initialize(): void {
-    // keeper(gameSceneParamaters);
     this.onStart();
   }
   /** 初期化直後の処理 */

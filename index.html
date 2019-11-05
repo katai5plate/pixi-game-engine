@@ -1,7 +1,15 @@
+<p>Loading...</p>
 <script>
-  window._redirect = () => (location.href = "./dist/index.html");
-</script>
-<a onclick="window._redirect()">Redirect after 3 seconds... (or CLICK ME!)</a>
-<script>
-  setTimeout(window._redirect, 3000);
+  const fn = () => {
+    setTimeout(() => {
+      fetch("/dist/index.html").then(x => {
+        if (x.ok) {
+          location.href = "./dist/index.html";
+          return;
+        }
+        fn();
+      });
+    }, 1000);
+  };
+  fn();
 </script>

@@ -5,7 +5,7 @@ import { Props } from "../../types/engine";
 import { AssetAlias } from "../lists/assets";
 import { MouseButtonAlias } from "../lists/keys";
 
-class Cat extends GameObject {
+class StarLight extends GameObject {
   dx: number;
   dy: number;
   speed: number;
@@ -48,12 +48,12 @@ export class TitleScene extends GameScene {
   onUpdate(/* delta: number */): void {
     if (this.props.gameApp.timeInt % 6 === 0) {
       for (let i = 0; i < 5; i++) {
-        this.addChild(new Cat(this.props));
+        this.addChild(new StarLight(this.props));
       }
     }
     if (this.props.gameApp.getMouseDown(MouseButtonAlias.Left)) {
       for (let i = 0; i < 30; i++) {
-        this.addChild(new Cat(this.props));
+        this.addChild(new StarLight(this.props));
       }
     }
   }
