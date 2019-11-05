@@ -10,11 +10,13 @@ import {
 import { SceneAlias } from "../lists/scenes";
 import { keyList, KeyAlias, MouseButtonAlias } from "../lists/keys";
 import { KeyboardButton, MouseButton } from "../Input";
+import { optional } from "../helpers/utils";
 
 interface GameAppParameters {
   assetList: AssetList;
   sceneList: SceneList;
   defaultScene: SceneAlias;
+  backgroundColor?: string;
 }
 
 export class GameApp extends PIXI.Application {
@@ -42,6 +44,10 @@ export class GameApp extends PIXI.Application {
     gameAppParameters: GameAppParameters
   ) {
     super(pixiApplicationConfig);
+    document.body.style.backgroundColor = optional(
+      gameAppParameters.backgroundColor,
+      ""
+    );
     this.props = { ...pixiApplicationConfig, gameApp: this };
     this.assetList = gameAppParameters.assetList;
 
@@ -107,6 +113,11 @@ export class GameApp extends PIXI.Application {
       this.mouseWheel = { x: e.deltaX, y: e.deltaY };
     });
 
+    window.addEventListener("resize", () => {
+      this.updateResponsiveBlackBar();
+    });
+    this.updateResponsiveBlackBar();
+
     // 右クリックメニュー禁止
     document.oncontextmenu = (): boolean => false;
 
@@ -114,6 +125,24 @@ export class GameApp extends PIXI.Application {
   }
   private initialize(): void {
     this.setScene(this.defaultScene);
+    return void 0;
+  }
+  /** リサイズ時に自動的に黒枠を再調整する */
+  public updateResponsiveBlackBar(): void {
+    const { innerWidth, innerHeight } = window;
+    const { scrollWidth } = this.view;
+    if (innerWidth > innerHeight && innerWidth > scrollWidth) {
+      this.view.style.width = "auto";
+      this.view.style.height = "100%";
+      return void 0;
+    }
+    if (innerWidth === innerHeight) {
+      this.view.style.width = "100%";
+      this.view.style.height = "100%";
+      return void 0;
+    }
+    this.view.style.width = "100%";
+    this.view.style.height = "auto";
     return void 0;
   }
   /** Canvas のサイズが何倍に描画されているか調べる */

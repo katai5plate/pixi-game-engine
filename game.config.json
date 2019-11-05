@@ -5,5 +5,6 @@
   "antialias": true,
   "transparent": false,
   "resolution": 1,
-  "codeSplitMaxSize": 1400000
+  "codeSplitMaxSize": 1400000,
+  "backgroundColor": "black"
 }

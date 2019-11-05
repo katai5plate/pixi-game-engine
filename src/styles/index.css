@@ -1,15 +1,8 @@
 body {
-  /* 背景色 black 推奨 */
-  background-color: black;
-
   margin: 0;
   padding: 0;
 }
 canvas {
-  /* auto か 100% にすることで幅高どちらを基準に拡大するか決める */
-  width: 100%; /* 横長の場合 100% 推奨 */
-  height: auto; /* 横長の場合 auto 推奨 */
-
   position: absolute;
   margin: auto;
   top: 0px;

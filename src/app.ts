@@ -15,6 +15,7 @@ export const application = new GameApp(
   {
     assetList,
     sceneList,
-    defaultScene: SceneAlias.Title
+    defaultScene: SceneAlias.Title,
+    backgroundColor: config.backgroundColor
   }
 );
