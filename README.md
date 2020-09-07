@@ -1,4 +1,4 @@
-# hello-pixi
+# pixi-game-engine
 
 PixiJS をちゃんと入門する。
 めざせゲームエンジン
