@@ -1,6 +1,6 @@
 {
-  "name": "hello-pixi",
-  "version": "1.0.0",
+  "name": "pixi-game-engine",
+  "version": "0.0.1",
   "description": "PixiJS をちゃんと入門する",
   "main": "bs-config.js",
   "dependencies": {
